@@ -60,7 +60,7 @@ async function myTask(page, url) {
   const paramsPool = {
     delaySpawn: 500,
   };
-  
+
   const crawlerPool = new CrawlerPool(numBrowsers, paramsPool, paramsCrawlers, logger);
   const urls = readURLs('./alexa.csv', numWebsites);
 

@@ -26,6 +26,7 @@ class CrawlerPool {
     }
 
     async launch() {
+        this.startTime = new Date();
         for (let i = 0; i < this.numCrawlers; i++) {
             const crawler = new Crawler(this.paramsCrawlers, this.queue, this.logger);
             await crawler.init();
@@ -53,8 +54,16 @@ class CrawlerPool {
 
         }, 30000);
 
+        const globalStats = setInterval(() => {
+            this.logger.info(`Global stats: ${this.queue.numTasksDone/((new Date() - this.startTime)/1000)} pages/s`)
+        }, 30000);
+
         await Promise.all(allPromises);
         clearInterval(stats);
+        clearInterval(globalStats);
+        this.logger.info(`Final stats: ${this.queue.numTasksDone/((new Date() - this.startTime)/1000)} pages/s`)
+
+
     }
 
     async close() {
@@ -62,7 +71,7 @@ class CrawlerPool {
             await Promise.all(this.crawlers.map(crawler => crawler.close()));
             this.logger.info('Closed all crawlers');
         } catch (e) {
-            this.logger.error(`Error when closing browser: ${e.message}`);
+            this.logger.error(`Error when closing browser: ${e.message} `);
         }
     }
 
