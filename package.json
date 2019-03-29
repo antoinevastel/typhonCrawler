@@ -1,0 +1,15 @@
+{
+  "name": "crawler_typhon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Crawler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^1.14.0",
+    "winston": "^3.2.1"
+  }
+}
